@@ -1,20 +1,12 @@
 import React from "react";
-import {
-  Alert,
-  Animated,
-  StyleSheet,
-  TouchableOpacity,
-  View,
-} from "react-native";
+import { Alert, Animated, StyleSheet, TouchableOpacity } from "react-native";
 import { CurvedBottomBarExpo } from "react-native-curved-bottom-bar";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { NavigationContainer } from "@react-navigation/native";
-// import { Ionicons } from '@expo/vector-icons';
-
-
+import OnBoardingScreen from "./src/screens/OnBoardingScreen";
 import Screen1 from "./src/screens/Screen1";
 import Screen2 from "./src/screens/Screen2";
-// import Login from "./src/screens/Login";
+import { createStackNavigator } from "@react-navigation/stack";
 
 export default function App() {
   const _renderIcon = (routeName, selectedTab) => {
@@ -40,6 +32,7 @@ export default function App() {
       />
     );
   };
+
   const renderTabBar = ({ routeName, selectedTab, navigate }) => {
     return (
       <TouchableOpacity
@@ -51,8 +44,11 @@ export default function App() {
     );
   };
 
-  return (
-    <NavigationContainer>
+  const CurvedBottomBarStack = createStackNavigator();
+  const MainStack = createStackNavigator();
+
+  const CurvedBottomBar = () => {
+    return (
       <CurvedBottomBarExpo.Navigator
         type="DOWN"
         style={styles.bottomBar}
@@ -60,7 +56,6 @@ export default function App() {
         height={55}
         circleWidth={50}
         bgColor="white"
-        initialRouteName="title1"
         borderTopLeftRight
         renderCircle={({ selectedTab, navigate }) => (
           <Animated.View style={styles.btnCircleUp}>
@@ -74,21 +69,21 @@ export default function App() {
         )}
         tabBar={renderTabBar}
       >
-        <CurvedBottomBarExpo.Screen
-          name="title1"
-          position="LEFT"
-          component={() => <Screen1 />}
-        />
-        <CurvedBottomBarExpo.Screen
-          name="title2"
-          component={() => <Screen2 />}
-          position="RIGHT"
-        />
+        <CurvedBottomBarExpo.Screen name="title1" position="LEFT" component={() => <Screen1 />} />
+        <CurvedBottomBarExpo.Screen name="title2" component={() => <Screen2 />} position="RIGHT" />
       </CurvedBottomBarExpo.Navigator>
+    );
+  };
+
+  return (
+    <NavigationContainer>
+      <MainStack.Navigator headerMode="none">
+        <MainStack.Screen name="Onboarding" component={OnBoardingScreen} />
+        <MainStack.Screen name="CurvedBottomBar" component={CurvedBottomBar} />
+      </MainStack.Navigator>
     </NavigationContainer>
   );
 }
-
 export const styles = StyleSheet.create({
   container: {
     flex: 1,
