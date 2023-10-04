@@ -77,8 +77,8 @@ export default function App() {
 
   return (
     <NavigationContainer>
-      <MainStack.Navigator headerMode="none">
-        <MainStack.Screen name="Onboarding" component={OnBoardingScreen} />
+      <MainStack.Navigator>
+        <MainStack.Screen name="Onboarding" component={OnBoardingScreen} options={{headerShown: false}}/>
         <MainStack.Screen name="CurvedBottomBar" component={CurvedBottomBar} />
       </MainStack.Navigator>
     </NavigationContainer>

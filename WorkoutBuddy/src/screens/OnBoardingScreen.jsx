@@ -32,7 +32,6 @@ const Skip = ({ ...props }) => (
     <Text
       style={{
         fontSize: 16,
-        // fontFamily: "Poppins-Bold",
         color: "#542fe0",
         marginLeft: 15,
       }}
@@ -47,7 +46,6 @@ const Next = ({ ...props }) => (
     <Text
       style={{
         fontSize: 16,
-        // fontFamily: "Poppins-Bold",
         color: "#542fe0",
         marginRight: 15,
       }}
@@ -62,7 +60,6 @@ const Done = ({ ...props }) => (
     <Text
       style={{
         fontSize: 16,
-        // fontFamily: "Poppins-Bold",
         color: "#542fe0",
         marginRight: 15,
       }}
@@ -140,11 +137,9 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 30,
-    fontFamily: "Poppins-Bold",
     color: "#542fe0",
   },
   text: {
-    fontFamily: "Poppins-Regular",
     color: "#000",
     textAlign: "center",
     paddingHorizontal: 20,
