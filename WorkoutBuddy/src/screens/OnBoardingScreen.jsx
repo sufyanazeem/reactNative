@@ -77,12 +77,12 @@ const OnBoardingScreen = ({ navigation }) => {
       NextButtonComponent={Next}
       DoneButtonComponent={Done}
       DotComponent={Dots}
-      onSkip={() => navigation.replace("CurvedBottomBar")}
-      onDone={() => navigation.replace("CurvedBottomBar")}
+      onSkip={() => navigation.replace("Login")}
+      onDone={() => navigation.replace("Login")}
       pages={[
         {
           backgroundColor: "#Fff",
-            image: <Image style={styles.image} source={require('../assets/man-women1.png')} />,
+            image: <Image style={styles.image} source={require('../assets/1.png')} />,
           title: <Text style={styles.title}>Manage Salaries</Text>,
           subtitle: (
             <Text style={styles.text}>
@@ -93,7 +93,7 @@ const OnBoardingScreen = ({ navigation }) => {
         },
         {
           backgroundColor: "#Fff",
-            image: <Image style={styles.image} source={require('../assets/man.png')} />,
+            image: <Image style={styles.image} source={require('../assets/2.png')} />,
           title: (
             <Text style={[styles.title, { color: "#542fe0" }]}>
               Manage Attendance
@@ -107,7 +107,7 @@ const OnBoardingScreen = ({ navigation }) => {
         },
         {
           backgroundColor: "#Fff",
-            image: <Image style={styles.image} source={require('../assets/women.png')} />,
+            image: <Image style={styles.image} source={require('../assets/3.png')} />,
           title: <Text style={styles.title}>Export Excel Sheets</Text>,
           subtitle: (
             <Text style={styles.text}>

@@ -6,6 +6,8 @@ import { NavigationContainer } from "@react-navigation/native";
 import OnBoardingScreen from "./src/screens/OnBoardingScreen";
 import Screen1 from "./src/screens/Screen1";
 import Screen2 from "./src/screens/Screen2";
+import Login from "./src/screens/Login";
+import Signup from "./src/screens/Signup";
 import { createStackNavigator } from "@react-navigation/stack";
 
 export default function App() {
@@ -79,6 +81,8 @@ export default function App() {
     <NavigationContainer>
       <MainStack.Navigator>
         <MainStack.Screen name="Onboarding" component={OnBoardingScreen} options={{headerShown: false}}/>
+        <MainStack.Screen name="Login" component={Login} options={{headerShown: false}}/>
+        <MainStack.Screen name="Signup" component={Signup} options={{headerShown: false}}/>
         <MainStack.Screen name="CurvedBottomBar" component={CurvedBottomBar} />
       </MainStack.Navigator>
     </NavigationContainer>
