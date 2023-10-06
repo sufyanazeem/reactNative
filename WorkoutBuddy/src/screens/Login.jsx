@@ -11,6 +11,7 @@ import {
 } from "react-native";
 
 import { useNavigation } from "@react-navigation/native";
+import colours from './../components/Colours';
 
 function Login() {
   const navigation = useNavigation();
@@ -108,7 +109,7 @@ function Login() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#f5f5f5",
+    backgroundColor: colours.secondary,
     alignItems: "center",
     justifyContent: "center",
   },
@@ -126,7 +127,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 35,
     fontWeight: "bold",
-    color: "#600EE6",
+    color: colours.primary,
     marginBottom:10,
     fontFamily: "sans-serif-condensed",
   },
@@ -142,6 +143,8 @@ const styles = StyleSheet.create({
     padding: 15,
     borderWidth: 1,
     borderRadius: 10,
+    borderColor:colours.primary,
+    borderWidth:1.5,
     fontFamily: "sans-serif-condensed",
     backgroundColor: "#fff",
   },
@@ -150,7 +153,7 @@ const styles = StyleSheet.create({
     fontSize: 14,
     marginTop:3,
     textAlign: "right",
-    color: "#600EE6",
+    color: colours.primary,
     fontFamily: "sans-serif-condensed",
   },
   loginButton: {
@@ -160,7 +163,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     alignItems: "center",
     justifyContent: "center",
-    backgroundColor: "#600EE6",
+    backgroundColor: colours.primary,
   },
   loginButtonText: {
     fontSize: 20,
@@ -171,12 +174,12 @@ const styles = StyleSheet.create({
   noAccount: {
     fontSize: 16,
     fontFamily: "sans-serif-condensed",
-    color: "#333",
+    color: colours.text,
   },
   signupLink: {
     fontSize: 16,
     fontWeight: "bold",
-    color: "#600EE6",
+    color: colours.primary,
   },
 });
 

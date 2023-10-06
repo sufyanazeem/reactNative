@@ -8,7 +8,7 @@ import Screen1 from "./src/screens/Screen1";
 import Screen2 from "./src/screens/Screen2";
 import Login from "./src/screens/Login";
 import Signup from "./src/screens/Signup";
-import { createStackNavigator } from "@react-navigation/stack";
+import { createStackNavigator, CardStyleInterpolators} from "@react-navigation/stack";
 
 export default function App() {
   const _renderIcon = (routeName, selectedTab) => {
@@ -79,10 +79,12 @@ export default function App() {
 
   return (
     <NavigationContainer>
-      <MainStack.Navigator>
+      <MainStack.Navigator screenOptions={{
+      // cardStyleInterpolator: CardStyleInterpolators.forFade
+    }}>
         <MainStack.Screen name="Onboarding" component={OnBoardingScreen} options={{headerShown: false}}/>
-        <MainStack.Screen name="Login" component={Login} options={{headerShown: false}}/>
-        <MainStack.Screen name="Signup" component={Signup} options={{headerShown: false}}/>
+        <MainStack.Screen name="Login" component={Login} options={{headerShown: false  }}/>
+        <MainStack.Screen name="Signup" component={Signup} options={{headerShown: false }}/>
         <MainStack.Screen name="CurvedBottomBar" component={CurvedBottomBar} />
       </MainStack.Navigator>
     </NavigationContainer>

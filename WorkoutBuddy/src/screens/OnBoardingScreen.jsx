@@ -9,11 +9,12 @@ import {
 } from "react-native";
 
 import Onboarding from "react-native-onboarding-swiper";
+import colours from "../components/Colours";
 
 const Dots = ({ selected }) => {
   let backgroundColor;
 
-  backgroundColor = selected ? "rgba(0, 0, 0, 0.8)" : "rgba(0, 0, 0, 0.3)";
+  backgroundColor = selected ? colours.primary : colours.text;
 
   return (
     <View
@@ -32,7 +33,7 @@ const Skip = ({ ...props }) => (
     <Text
       style={{
         fontSize: 16,
-        color: "#542fe0",
+        color: colours.primary,
         marginLeft: 15,
       }}
     >
@@ -46,7 +47,7 @@ const Next = ({ ...props }) => (
     <Text
       style={{
         fontSize: 16,
-        color: "#542fe0",
+        color: colours.primary,
         marginRight: 15,
       }}
     >
@@ -60,7 +61,7 @@ const Done = ({ ...props }) => (
     <Text
       style={{
         fontSize: 16,
-        color: "#542fe0",
+        color: colours.primary,
         marginRight: 15,
       }}
     >
@@ -81,7 +82,7 @@ const OnBoardingScreen = ({ navigation }) => {
       onDone={() => navigation.replace("Login")}
       pages={[
         {
-          backgroundColor: "#Fff",
+          backgroundColor: colours.secondary,
             image: <Image style={styles.image} source={require('../assets/1.png')} />,
           title: <Text style={styles.title}>Manage Salaries</Text>,
           subtitle: (
@@ -92,10 +93,10 @@ const OnBoardingScreen = ({ navigation }) => {
           ),
         },
         {
-          backgroundColor: "#Fff",
+          backgroundColor: colours.secondary,
             image: <Image style={styles.image} source={require('../assets/2.png')} />,
           title: (
-            <Text style={[styles.title, { color: "#542fe0" }]}>
+            <Text style={styles.title}>
               Manage Attendance
             </Text>
           ),
@@ -106,7 +107,7 @@ const OnBoardingScreen = ({ navigation }) => {
           ),
         },
         {
-          backgroundColor: "#Fff",
+          backgroundColor: colours.secondary,
             image: <Image style={styles.image} source={require('../assets/3.png')} />,
           title: <Text style={styles.title}>Export Excel Sheets</Text>,
           subtitle: (
@@ -128,6 +129,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     paddingHorizontal: 10,
+    backgroundColor:colours.secondary,
   },
   image: {
     height: 200,
@@ -137,10 +139,10 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 30,
-    color: "#542fe0",
+    color: colours.primary,
   },
   text: {
-    color: "#000",
+    color: colours.text,
     textAlign: "center",
     paddingHorizontal: 20,
   },

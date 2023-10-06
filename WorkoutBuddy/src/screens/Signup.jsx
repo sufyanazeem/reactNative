@@ -11,6 +11,7 @@ import {
   Alert,
   ScrollView,
 } from "react-native";
+import colours from "../components/Colours";
 
  function Signup() {
   const navigation = useNavigation();
@@ -85,7 +86,7 @@ import {
     <>
       <ScrollView style={styles.container}>
         <View
-          style={[styles.screen, { display: display, backgroundColor: "#fff" }]}
+          style={styles.screen}
         >
           <View style={styles.header}>
             <Image style={styles.logo} source={require("../assets/logo.png")} />
@@ -144,10 +145,11 @@ import {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff",
+    backgroundColor: colours.secondary,
   },
   screen: {
     flex: 1,
+    backgroundColor:colours.secondary,
     alignItems: "center",
     justifyContent: "center",
   },
@@ -167,7 +169,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 35,
     fontWeight: "bold",
-    color: "#600EE6",
+    color: colours.primary,
     marginBottom:10,
     fontFamily: "sans-serif-condensed",
   },
@@ -185,6 +187,9 @@ const styles = StyleSheet.create({
     marginVertical: 6,
     borderWidth: 1,
     borderRadius: 10,
+    borderColor:colours.primary,
+    borderWidth:1.5,
+    backgroundColor: colours.text,
   },
   button: {
     height: 50,
@@ -194,7 +199,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     alignItems: "center",
     justifyContent: "center",
-    backgroundColor: "#600EE6",
+    backgroundColor: colours.primary,
   },
   buttonText: {
     fontSize: 20,
@@ -205,10 +210,11 @@ const styles = StyleSheet.create({
   text: {
     fontSize: 16,
     fontFamily: "sans-serif-condensed",
+    color:colours.text,
   },
   textLink: {
     fontSize: 16,
-    color: "#600EE6",
+    color: colours.primary,
     fontWeight: "bold",
     fontFamily: "sans-serif-condensed",
   },
