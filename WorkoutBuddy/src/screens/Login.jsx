@@ -11,11 +11,12 @@ import {
 } from "react-native";
 
 import { useNavigation } from "@react-navigation/native";
-import colours from './../components/Colours';
+import colours from "./../components/Colours";
+import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import Loader from "../components/Loader";
 
 function Login() {
   const navigation = useNavigation();
-
   const handleAlert = (email, password) => {
     const isEmailValid = email.includes("@") && email.includes(".");
     const isPasswordValid = password.length >= 6;
@@ -41,68 +42,81 @@ function Login() {
         ]
       );
     } else {
-      Alert.alert("Login Successful", "Welcome back! You are now logged in.", [
-        {
-          text: "OK",
-          onPress: () => {
-            console.log("OK Pressed");
-            navigation.navigate("MessageListScreen");
-          },
-          style: "default",
-        },
-      ]);
+      setWaiting(true)
+      const auth = getAuth();
+      signInWithEmailAndPassword(auth, email, password)
+        .then((userCredential) => {
+          // Signed in
+          const user = userCredential.user;
+          console.log(user);
+          navigation.navigate("CurvedBottomBar")
+          console.log("Login successful");
+          setWaiting(false)
+        })
+        .catch((error) => {
+          const errorCode = error.code;
+          const errorMessage = error.message;
+          console.log(errorCode, errorMessage);
+          setWaiting(false)
+        });
     }
   };
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [waiting, setWaiting] = useState(false);
 
   return (
-    <ScrollView contentContainerStyle={styles.container}>
-      <View style={styles.screen}>
-        <Image style={styles.logo} source={require("../assets/logo.png")} />
-        <Text style={styles.title}>Workout Tracker</Text>
-      </View>
-      <View style={styles.form}>
-        <TextInput
-          value={email}
-          placeholder="Email"
-          style={styles.input}
-          onChangeText={setEmail}
-          keyboardType="email-address"
-        />
-        <TextInput
-          value={password}
-          style={styles.input}
-          placeholder="Password"
-          secureTextEntry={true}
-          onChangeText={setPassword}
-        />
-        <Text
-          style={styles.forgotPassword}
-          onPress={() => console.log("Forgot Password Pressed")}
-        >
-          Forgot Your Password?
-        </Text>
-        <TouchableOpacity
-          style={styles.loginButton}
-          onPress={() => {
-            handleAlert(email, password);
-          }}
-        >
-          <Text style={styles.loginButtonText}>LOGIN</Text>
-        </TouchableOpacity>
-        <Text style={styles.noAccount}>
-          Don't Have an Account?{" "}
-          <Text
-            style={styles.signupLink}
-            onPress={() => navigation.navigate("Signup")}
-          >
-            Sign Up
-          </Text>
-        </Text>
-      </View>
-    </ScrollView>
+    <>
+      {waiting && <Loader />}
+      {!waiting && (
+        <ScrollView contentContainerStyle={styles.container}>
+          <View style={styles.screen}>
+            <Image style={styles.logo} source={require("../assets/logo.png")} />
+            <Text style={styles.title}>Workout Tracker</Text>
+          </View>
+          <View style={styles.form}>
+            <TextInput
+              value={email}
+              placeholder="Email"
+              style={styles.input}
+              onChangeText={setEmail}
+              keyboardType="email-address"
+            />
+            <TextInput
+              value={password}
+              style={styles.input}
+              placeholder="Password"
+              secureTextEntry={true}
+              onChangeText={setPassword}
+            />
+            <Text
+              style={styles.forgotPassword}
+              onPress={() => console.log("Forgot Password Pressed")}
+            >
+              Forgot Your Password?
+            </Text>
+            <TouchableOpacity
+              style={styles.loginButton}
+              onPress={() => {
+                handleAlert(email, password);
+              }}
+            >
+              <Text style={styles.loginButtonText}>LOGIN</Text>
+            </TouchableOpacity>
+            <Text style={styles.noAccount}>
+              Don't Have an Account?{" "}
+              <Text
+                style={styles.signupLink}
+                onPress={() => navigation.navigate("Signup")}
+              >
+                Sign Up
+              </Text>
+            </Text>
+          </View>
+        </ScrollView>
+      )}
+    </>
   );
 }
 
@@ -128,7 +142,7 @@ const styles = StyleSheet.create({
     fontSize: 35,
     fontWeight: "bold",
     color: colours.primary,
-    marginBottom:10,
+    marginBottom: 10,
     fontFamily: "sans-serif-condensed",
   },
   form: {
@@ -143,15 +157,15 @@ const styles = StyleSheet.create({
     padding: 15,
     borderWidth: 1,
     borderRadius: 10,
-    borderColor:colours.primary,
-    borderWidth:1.5,
+    borderColor: colours.primary,
+    borderWidth: 1.5,
     fontFamily: "sans-serif-condensed",
     backgroundColor: "#fff",
   },
   forgotPassword: {
     width: "100%",
     fontSize: 14,
-    marginTop:3,
+    marginTop: 3,
     textAlign: "right",
     color: colours.primary,
     fontFamily: "sans-serif-condensed",
@@ -159,7 +173,7 @@ const styles = StyleSheet.create({
   loginButton: {
     width: "100%",
     height: 50,
-    marginVertical:10,
+    marginVertical: 10,
     borderRadius: 10,
     alignItems: "center",
     justifyContent: "center",
@@ -182,6 +196,5 @@ const styles = StyleSheet.create({
     color: colours.primary,
   },
 });
-
 
 export default Login;

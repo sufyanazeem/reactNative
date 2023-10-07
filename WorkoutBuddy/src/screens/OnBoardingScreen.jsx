@@ -83,36 +83,36 @@ const OnBoardingScreen = ({ navigation }) => {
       pages={[
         {
           backgroundColor: colours.secondary,
-            image: <Image style={styles.image} source={require('../assets/1.png')} />,
-          title: <Text style={styles.title}>Manage Salaries</Text>,
-          subtitle: (
-            <Text style={styles.text}>
-              Manage the Salary of your Employess by adding different per hour
-              salary for different employee
-            </Text>
-          ),
-        },
-        {
-          backgroundColor: colours.secondary,
             image: <Image style={styles.image} source={require('../assets/2.png')} />,
           title: (
             <Text style={styles.title}>
-              Manage Attendance
+             Live Your Life Healthy
             </Text>
           ),
           subtitle: (
             <Text style={styles.text}>
-              Keep the record of the daily attendance of your Employees
+             Embrace wellness as a lifestyle choice, prioritizing nutrition and fitness to enhance your overall well-being and vitality
             </Text>
           ),
         },
         {
           backgroundColor: colours.secondary,
-            image: <Image style={styles.image} source={require('../assets/3.png')} />,
-          title: <Text style={styles.title}>Export Excel Sheets</Text>,
+            image: <Image style={styles.image} source={require('../assets/1.png')} />,
+          title: <Text style={styles.title}>Track Your Workout Activity</Text>,
           subtitle: (
             <Text style={styles.text}>
-              Export the excel sheet of all your staff data on a single click!,
+              Stay motivated and monitor your fitness progress with ease, keeping tabs on your exercise routines and goals effortlessly
+            </Text>
+          ),
+        },
+        
+        {
+          backgroundColor: colours.secondary,
+            image: <Image style={styles.image} source={require('../assets/3.png')} />,
+          title: <Text style={styles.title}>Big Goals</Text>,
+          subtitle: (
+            <Text style={styles.text}>
+              Set ambitious aspirations and pursue your dreams
             </Text>
           ),
         },
@@ -145,5 +145,7 @@ const styles = StyleSheet.create({
     color: colours.text,
     textAlign: "center",
     paddingHorizontal: 20,
+    marginHorizontal:40,
+    marginTop:10,
   },
 });
