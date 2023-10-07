@@ -8,7 +8,10 @@ import Screen1 from "./src/screens/Screen1";
 import Screen2 from "./src/screens/Screen2";
 import Login from "./src/screens/Login";
 import Signup from "./src/screens/Signup";
-import { createStackNavigator, CardStyleInterpolators} from "@react-navigation/stack";
+import {
+  createStackNavigator,
+  CardStyleInterpolators,
+} from "@react-navigation/stack";
 
 export default function App() {
   const _renderIcon = (routeName, selectedTab) => {
@@ -52,6 +55,7 @@ export default function App() {
   const CurvedBottomBar = () => {
     return (
       <CurvedBottomBarExpo.Navigator
+        screenOptions={{ headerShown: false }}
         type="DOWN"
         style={styles.bottomBar}
         shadowStyle={styles.shawdow}
@@ -71,21 +75,51 @@ export default function App() {
         )}
         tabBar={renderTabBar}
       >
-        <CurvedBottomBarExpo.Screen name="title1" position="LEFT" component={() => <Screen1 />} />
-        <CurvedBottomBarExpo.Screen name="title2" component={() => <Screen2 />} position="RIGHT" />
+        <CurvedBottomBarExpo.Screen
+          name="title1"
+          position="LEFT"
+          component={() => <Screen1 />}
+          options={{ headerShown: false }}
+        />
+        <CurvedBottomBarExpo.Screen
+          name="title2"
+          component={() => <Screen2 />}
+          position="RIGHT"
+          options={{ headerShown: false }}
+        />
       </CurvedBottomBarExpo.Navigator>
     );
   };
 
   return (
     <NavigationContainer>
-      <MainStack.Navigator screenOptions={{
-      // cardStyleInterpolator: CardStyleInterpolators.forFade
-    }}>
-        <MainStack.Screen name="Onboarding" component={OnBoardingScreen} options={{headerShown: false}}/>
-        <MainStack.Screen name="Login" component={Login} options={{headerShown: false  }}/>
-        <MainStack.Screen name="Signup" component={Signup} options={{headerShown: false }}/>
-        <MainStack.Screen name="CurvedBottomBar" component={CurvedBottomBar} />
+      <MainStack.Navigator
+        screenOptions={
+          {
+            // cardStyleInterpolator: CardStyleInterpolators.forFade
+          }
+        }
+      >
+        <MainStack.Screen
+          name="Onboarding"
+          component={OnBoardingScreen}
+          options={{ headerShown: false }}
+        />
+        <MainStack.Screen
+          name="Login"
+          component={Login}
+          options={{ headerShown: false }}
+        />
+        <MainStack.Screen
+          name="Signup"
+          component={Signup}
+          options={{ headerShown: false }}
+        />
+        <MainStack.Screen
+          name="CurvedBottomBar"
+          component={CurvedBottomBar}
+          options={{ headerShown: false }}
+        />
       </MainStack.Navigator>
     </NavigationContainer>
   );

@@ -49,7 +49,7 @@ function Login() {
           // Signed in
           const user = userCredential.user;
           console.log(user);
-          navigation.navigate("CurvedBottomBar")
+          navigation.replace("CurvedBottomBar")
           console.log("Login successful");
           setWaiting(false)
         })

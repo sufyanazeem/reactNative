@@ -1,6 +1,9 @@
 import React, { useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { StatusBar } from "expo-status-bar";
+import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+import { DB } from "../../Connection/FirebaseConfig";
+import { collection, setDoc, doc } from "firebase/firestore";
 import {
   StyleSheet,
   Text,
@@ -12,8 +15,9 @@ import {
   ScrollView,
 } from "react-native";
 import colours from "../components/Colours";
+import Loader from "../components/Loader";
 
- function Signup() {
+function Signup() {
   const navigation = useNavigation();
 
   const showAlert = (username, email, password) => {
@@ -56,19 +60,30 @@ import colours from "../components/Colours";
         ]
       );
     } else {
-      Alert.alert(
-        "Signup Successful",
-        "Your account has been created successfully!",
-        [
-          {
-            text: "OK",
-            onPress: () => {
-              console.log("OK Pressed");
-            },
-            style: "default",
-          },
-        ]
-      );
+      setWaiting(true);
+      const auth = getAuth();
+      createUserWithEmailAndPassword(auth, email, password)
+        .then(async (userCredential) => {
+          // Signed up
+          const user = userCredential.user;
+          try {
+            const docRef = await setDoc(doc(DB, "users", email), {
+              email: email,
+              username: username,
+            });
+            navigation.replace("CurvedBottomBar")
+            setWaiting(false);
+          } catch (e) {
+            console.error("Error adding document: ", e);
+            setWaiting(false);
+          }
+        })
+        .catch((error) => {
+          const errorCode = error.code;
+          const errorMessage = error.message;
+          setWaiting(false);
+        });
+
     }
   };
 
@@ -81,62 +96,67 @@ import colours from "../components/Colours";
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [waiting, setWaiting] = useState(false);
 
   return (
     <>
-      <ScrollView style={styles.container}>
-        <View
-          style={styles.screen}
-        >
-          <View style={styles.header}>
-            <Image style={styles.logo} source={require("../assets/logo.png")} />
-            <Text style={styles.title}>Create Account</Text>
-          </View>
-          <View style={styles.form}>
-            <TextInput
-              value={username}
-              placeholder="Name"
-              style={styles.input}
-              onChangeText={setUsername}
-            />
-            <TextInput
-              value={email}
-              placeholder="Email"
-              style={styles.input}
-              onChangeText={setEmail}
-              keyboardType="email-address"
-            />
-            <TextInput
-              value={password}
-              style={styles.input}
-              placeholder="Password"
-              secureTextEntry={true}
-              onChangeText={setPassword}
-            />
-            <TextInput
-              value={password}
-              style={styles.input}
-              placeholder="Confirm Password"
-              secureTextEntry={true}
-              onChangeText={setPassword}
-            />
-            <TouchableOpacity
-              style={styles.button}
-              onPress={() => {
-                showAlert(username, email, password);
-              }}
-            >
-              <Text style={styles.buttonText}>SIGN UP</Text>
-            </TouchableOpacity>
-            <Text style={styles.text}>
-              Already have an account?{" "}
-              <Text style={styles.textLink} onPress={onPressHandler}>
-                Login
+      {waiting && <Loader />}
+      {!waiting && (
+        <ScrollView style={styles.container}>
+          <View style={styles.screen}>
+            <View style={styles.header}>
+              <Image
+                style={styles.logo}
+                source={require("../assets/logo.png")}
+              />
+              <Text style={styles.title}>Create Account</Text>
+            </View>
+            <View style={styles.form}>
+              <TextInput
+                value={username}
+                placeholder="Name"
+                style={styles.input}
+                onChangeText={setUsername}
+              />
+              <TextInput
+                value={email}
+                placeholder="Email"
+                style={styles.input}
+                onChangeText={setEmail}
+                keyboardType="email-address"
+              />
+              <TextInput
+                value={password}
+                style={styles.input}
+                placeholder="Password"
+                secureTextEntry={true}
+                onChangeText={setPassword}
+              />
+              <TextInput
+                value={password}
+                style={styles.input}
+                placeholder="Confirm Password"
+                secureTextEntry={true}
+                onChangeText={setPassword}
+              />
+              <TouchableOpacity
+                style={styles.button}
+                onPress={() => {
+                  showAlert(username, email, password);
+                }}
+              >
+                <Text style={styles.buttonText}>SIGN UP</Text>
+              </TouchableOpacity>
+              <Text style={styles.text}>
+                Already have an account?{" "}
+                <Text style={styles.textLink} onPress={onPressHandler}>
+                  Login
+                </Text>
               </Text>
-            </Text>
+            </View>
           </View>
-        </View>
-      </ScrollView>
+        </ScrollView>
+      )}
       <StatusBar style="auto" />
     </>
   );
@@ -149,7 +169,7 @@ const styles = StyleSheet.create({
   },
   screen: {
     flex: 1,
-    backgroundColor:colours.secondary,
+    backgroundColor: colours.secondary,
     alignItems: "center",
     justifyContent: "center",
   },
@@ -170,7 +190,7 @@ const styles = StyleSheet.create({
     fontSize: 35,
     fontWeight: "bold",
     color: colours.primary,
-    marginBottom:10,
+    marginBottom: 10,
     fontFamily: "sans-serif-condensed",
   },
   form: {
@@ -187,8 +207,8 @@ const styles = StyleSheet.create({
     marginVertical: 6,
     borderWidth: 1,
     borderRadius: 10,
-    borderColor:colours.primary,
-    borderWidth:1.5,
+    borderColor: colours.primary,
+    borderWidth: 1.5,
     backgroundColor: colours.text,
   },
   button: {
@@ -210,7 +230,7 @@ const styles = StyleSheet.create({
   text: {
     fontSize: 16,
     fontFamily: "sans-serif-condensed",
-    color:colours.text,
+    color: colours.text,
   },
   textLink: {
     fontSize: 16,
