@@ -12,6 +12,7 @@ import { DB } from "../../Connection/FirebaseConfig";
 import { collection, addDoc } from "firebase/firestore";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { ScrollView } from "react-native-gesture-handler";
+import DaysOfWeek from "../components/DaysOfWeek";
 
 const Screen1 = () => {
   const [email, setEmail] = useState("");
@@ -51,6 +52,7 @@ const Screen1 = () => {
     <ScrollView style={{ marginTop: 0 }}>
       <View>
         <MHeader />
+        <DaysOfWeek />
         <TouchableOpacity>
           <Text onPress={logout}>Logout</Text>
         </TouchableOpacity>
