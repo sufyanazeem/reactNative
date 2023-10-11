@@ -9,7 +9,7 @@ import {
   Alert,
   ScrollView,
 } from "react-native";
-
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useNavigation } from "@react-navigation/native";
 import colours from "./../components/Colours";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
@@ -17,6 +17,14 @@ import Loader from "../components/Loader";
 
 function Login() {
   const navigation = useNavigation();
+  const storeData = async () => {
+    try {
+      await AsyncStorage.setItem('email', email);
+      await AsyncStorage.setItem('status', "true");
+    } catch (e) {
+      console.log("Something went wrong")
+    }
+  };
   const handleAlert = (email, password) => {
     const isEmailValid = email.includes("@") && email.includes(".");
     const isPasswordValid = password.length >= 6;
@@ -49,6 +57,7 @@ function Login() {
           // Signed in
           const user = userCredential.user;
           console.log(user);
+          storeData();
           navigation.replace("CurvedBottomBar")
           console.log("Login successful");
           setWaiting(false)

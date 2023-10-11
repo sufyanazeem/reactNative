@@ -1,5 +1,5 @@
-import React from "react";
-import { Alert, Animated, StyleSheet, TouchableOpacity } from "react-native";
+import React, { useEffect, useState } from "react";
+import { Alert, Animated, StyleSheet, TouchableOpacity, LogBox } from "react-native";
 import { CurvedBottomBarExpo } from "react-native-curved-bottom-bar";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { NavigationContainer } from "@react-navigation/native";
@@ -12,8 +12,32 @@ import {
   createStackNavigator,
   CardStyleInterpolators,
 } from "@react-navigation/stack";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function App() {
+  const [status, setStatus] = useState(null);
+
+  useEffect(() => {
+    const getData = async () => {
+      try {
+        const value = await AsyncStorage.getItem("status");
+        if (value !== null) {
+          setStatus(value);
+        } else {
+          setStatus("false");
+        }
+      } catch (e) {
+        console.log("Something went wrong, App.jsx", e);
+      }
+    };
+
+    getData();
+
+    // The effect should only run once, so leave the dependency array empty
+  }, []);
+  useEffect(() => {
+    LogBox.ignoreLogs(["@firebase/auth: Auth (10.4.0)"])
+  }, [])
   const _renderIcon = (routeName, selectedTab) => {
     let icon = "";
 
@@ -69,7 +93,7 @@ export default function App() {
               style={styles.button}
               onPress={() => Alert.alert("Click Action")}
             >
-              <Ionicons name={"apps-sharp"} color="gray" size={25} />
+              <Ionicons name={"add-circle"} color="gray" size={57} />
             </TouchableOpacity>
           </Animated.View>
         )}
@@ -90,39 +114,63 @@ export default function App() {
       </CurvedBottomBarExpo.Navigator>
     );
   };
-
-  return (
-    <NavigationContainer>
-      <MainStack.Navigator
-        screenOptions={
-          {
-            // cardStyleInterpolator: CardStyleInterpolators.forFade
-          }
-        }
-      >
-        <MainStack.Screen
-          name="Onboarding"
-          component={OnBoardingScreen}
-          options={{ headerShown: false }}
-        />
-        <MainStack.Screen
-          name="Login"
-          component={Login}
-          options={{ headerShown: false }}
-        />
-        <MainStack.Screen
-          name="Signup"
-          component={Signup}
-          options={{ headerShown: false }}
-        />
-        <MainStack.Screen
-          name="CurvedBottomBar"
-          component={CurvedBottomBar}
-          options={{ headerShown: false }}
-        />
-      </MainStack.Navigator>
-    </NavigationContainer>
-  );
+  while (status !== null) {
+    if (status === "true") {
+      return (
+        <NavigationContainer>
+          <MainStack.Navigator>
+            <MainStack.Screen
+              name="CurvedBottomBar"
+              component={CurvedBottomBar}
+              // options={{ headerShown: false }}
+            />
+            <MainStack.Screen
+              name="Onboarding"
+              component={OnBoardingScreen}
+              options={{ headerShown: false }}
+            />
+            <MainStack.Screen
+              name="Login"
+              component={Login}
+              options={{ headerShown: false }}
+            />
+            <MainStack.Screen
+              name="Signup"
+              component={Signup}
+              options={{ headerShown: false }}
+            />
+          </MainStack.Navigator>
+        </NavigationContainer>
+      );
+    } else {
+      return (
+        <NavigationContainer>
+          <MainStack.Navigator>
+            <MainStack.Screen
+              name="Onboarding"
+              component={OnBoardingScreen}
+              options={{ headerShown: false }}
+            />
+            <MainStack.Screen
+              name="Login"
+              component={Login}
+              options={{ headerShown: false }}
+            />
+            <MainStack.Screen
+              name="Signup"
+              component={Signup}
+              options={{ headerShown: false }}
+            />
+            <MainStack.Screen
+              name="CurvedBottomBar"
+              component={CurvedBottomBar}
+              options={{ headerShown: false }}
+            />
+          </MainStack.Navigator>
+        </NavigationContainer>
+      );
+    }
+  }
 }
 export const styles = StyleSheet.create({
   container: {

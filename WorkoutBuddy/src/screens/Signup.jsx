@@ -16,10 +16,17 @@ import {
 } from "react-native";
 import colours from "../components/Colours";
 import Loader from "../components/Loader";
-
+import AsyncStorage from "@react-native-async-storage/async-storage";
 function Signup() {
   const navigation = useNavigation();
-
+  const storeData = async () => {
+    try {
+      await AsyncStorage.setItem('email', email);
+      await AsyncStorage.setItem('status', "true");
+    } catch (e) {
+      console.log("Something went wrong")
+    }
+  };
   const showAlert = (username, email, password) => {
     const isUsernameValid = username.length > 0;
     const isEmailValid = email.includes("@") && email.includes(".");
@@ -71,6 +78,7 @@ function Signup() {
               email: email,
               username: username,
             });
+            storeData();
             navigation.replace("CurvedBottomBar")
             setWaiting(false);
           } catch (e) {
